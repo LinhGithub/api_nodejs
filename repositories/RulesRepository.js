@@ -32,8 +32,8 @@ class RulesRepository {
   }
 
   // count documents
-  countDoc(filter) {
-    return this.model.count(filter);
+  async countDoc(filter) {
+    return await this.model.count(filter);
   }
 }
 

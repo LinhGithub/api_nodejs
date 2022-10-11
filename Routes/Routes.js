@@ -77,12 +77,11 @@ app.post("/illnesses", multer().none(), async (req, res) => {
 // delete
 app.delete("/illnesses/:id", (req, res) => {
   const { id } = req.params;
-  var check_rule =
-    rulesRepository.countDoc({ illnesses_id: id }) +
-    rulesRepository.countDoc({ symptoms: id });
-  Promise.all([rulesRepository])
+  var count_doc = rulesRepository.countDoc({ illnesses_id: id });
+  var count_doc1 = rulesRepository.countDoc({ symptoms: id });
+  Promise.all([count_doc, count_doc1])
     .then((rs) => {
-      var count_doc_rule = rs[0];
+      var count_doc_rule = rs[0] + rs[1];
       if (count_doc_rule == 0) {
         illnessesRepository
           .deleteById(id)
